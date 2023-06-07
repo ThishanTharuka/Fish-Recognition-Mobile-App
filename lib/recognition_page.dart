@@ -20,9 +20,9 @@ class _RecognitionPageState extends State<RecognitionPage> {
     if (_selectedIndex == 0) {
       // Handle Home action (navigate to the recognition page)
     } else if (_selectedIndex == 1) {
-      // Handle Settings action
+      Navigator.pushNamed(context, '/settings');
     } else if (_selectedIndex == 2) {
-      // Handle About action
+      Navigator.pushNamed(context, '/about');
     } else if (_selectedIndex == 3) {
       exit(0); // Close the app
     }

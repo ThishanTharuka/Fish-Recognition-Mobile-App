@@ -7,6 +7,18 @@ class OpeningPage extends StatefulWidget {
 
 class _OpeningPageState extends State<OpeningPage> {
   @override
+  void initState() {
+    super.initState();
+    _navigateToHomePage();
+  }
+
+  void _navigateToHomePage() {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/home');
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 247, 236, 186),
