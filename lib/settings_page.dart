@@ -9,6 +9,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
         backgroundColor: Color.fromARGB(255, 62, 95, 243),
+        automaticallyImplyLeading: false, // Remove the back button
       ),
       body: Center(
         child: Text(

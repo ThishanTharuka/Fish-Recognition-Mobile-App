@@ -51,7 +51,8 @@ class _RecognitionPageState extends State<RecognitionPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 62, 95, 243),
-        title: Text('Fish Recognition'),
+        title: Text('Fish Detective'),
+        automaticallyImplyLeading: false, // Remove the back button
       ),
       body: Center(
         child: Column(
