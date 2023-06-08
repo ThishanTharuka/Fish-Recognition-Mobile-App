@@ -6,15 +6,30 @@ class OpeningPage extends StatefulWidget {
 }
 
 class _OpeningPageState extends State<OpeningPage> {
+  bool _showIcon = false;
+
   @override
   void initState() {
     super.initState();
+    _delayedShowIcon();
     _navigateToHomePage();
   }
 
-  void _navigateToHomePage() {
+  void _delayedShowIcon() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/home');
+      if (mounted) {
+        setState(() {
+          _showIcon = true;
+        });
+      }
+    });
+  }
+
+  void _navigateToHomePage() {
+    Future.delayed(Duration(seconds: 5), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     });
   }
 
@@ -30,10 +45,14 @@ class _OpeningPageState extends State<OpeningPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/icon.png', // app icon
-                    width: 200, // Adjust the size of the icon as needed
-                    height: 200,
+                  AnimatedOpacity(
+                    opacity: _showIcon ? 1.0 : 0.0,
+                    duration: Duration(milliseconds: 900),
+                    child: Image.asset(
+                      'assets/icon1.png', // app icon
+                      width: 200, // Adjust the size of the icon as needed
+                      height: 200,
+                    ),
                   ),
                 ],
               ),
