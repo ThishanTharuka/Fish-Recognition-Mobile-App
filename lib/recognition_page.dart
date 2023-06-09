@@ -56,37 +56,61 @@ class _RecognitionPageState extends State<RecognitionPage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(
-              onPressed: _handleUploadPhoto,
-              style: TextButton.styleFrom(
-                primary: Colors.black,
-                backgroundColor: Colors.grey[200],
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                'Upload Photo',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextButton(
-              onPressed: _handleOpenCamera,
-              style: TextButton.styleFrom(
-                primary: Colors.black,
-                backgroundColor: Colors.grey[200],
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: Text(
-                'Open Camera',
-                style: TextStyle(fontSize: 16),
+            SizedBox(height: 16), // Add some space above the buttons
+            Container(
+              margin: EdgeInsets.fromLTRB(
+                  0, 0, 0, 10), // Add bottom margin of 16 pixels
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: _handleUploadPhoto,
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.blue,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child: Text(
+                        'Upload Photo',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Manrope',
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: _handleOpenCamera,
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.blue,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child: Text(
+                        'Open Camera',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Manrope',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -123,4 +147,28 @@ class _RecognitionPageState extends State<RecognitionPage> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: RecognitionPage(),
+    routes: <String, WidgetBuilder>{
+      '/settings': (BuildContext context) => Scaffold(
+            appBar: AppBar(
+              title: Text('Settings'),
+            ),
+            body: Center(
+              child: Text('Settings Page'),
+            ),
+          ),
+      '/about': (BuildContext context) => Scaffold(
+            appBar: AppBar(
+              title: Text('About'),
+            ),
+            body: Center(
+              child: Text('About Page'),
+            ),
+          ),
+    },
+  ));
 }

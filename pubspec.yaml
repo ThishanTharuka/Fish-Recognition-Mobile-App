@@ -55,6 +55,11 @@ dev_dependencies:
 flutter:
   assets:
     - assets/icon1.png
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: fonts\Manrope-VariableFont_wght.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
