@@ -44,3 +44,25 @@ and inference of deep learning neural networks.
 - Keras – Keras acts as an interface for the Tensorflow library
 - Flutter – Flutter is used to develop mobile applications which are
 supported to Android/iOS platforms.
+
+### Recognizable Fish Species
+- Anthias anthias
+- Atherinomorus lacunosus
+- Belone belone
+- Boops boops
+- Chlorophthalmus agassizi
+- Coris julis
+- Dasyatis centroura
+- Epinephelus caninus
+- Gobius niger
+- Mugil cephalus
+- Phycis phycis
+- Polyprion americanus
+- Pseudocaranx dentex
+- Rhinobatos cemiculus
+- Scomber japonicus
+- Solea solea
+- Squalus acanthias
+- Tetrapturus belone
+- Trachinus draco
+- Trigloporus lastoviza
