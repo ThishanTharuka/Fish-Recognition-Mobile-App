@@ -6,11 +6,11 @@ import 'package:tflite/tflite.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: RecognitionPage(),
+    home: const RecognitionPage(),
     routes: <String, WidgetBuilder>{
       '/settings': (BuildContext context) => Scaffold(
             appBar: AppBar(
-              title: Text('Settings'),
+              title: const Text('Settings'),
             ),
             body: const Center(
               child: Text('Settings Page'),
@@ -18,7 +18,7 @@ void main() {
           ),
       '/about': (BuildContext context) => Scaffold(
             appBar: AppBar(
-              title: Text('About'),
+              title: const Text('About'),
             ),
             body: const Center(
               child: Text('About Page'),
@@ -99,10 +99,10 @@ class _RecognitionPageState extends State<RecognitionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 238, 250, 255),
+      backgroundColor: const Color.fromARGB(255, 238, 250, 255),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 128, 216, 255),
-        title: Text(
+        backgroundColor: const Color.fromARGB(255, 128, 216, 255),
+        title: const Text(
           'Fish Detective',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -116,10 +116,14 @@ class _RecognitionPageState extends State<RecognitionPage> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
+            height: 300, // Set a fixed height as per your requirement
             child: imageSelect
-                ? Image.file(_image)
-                : Opacity(
+                ? Image.file(
+                    _image,
+                    fit: BoxFit.cover, // You can use different BoxFit options
+                  )
+                : const Opacity(
                     opacity: 1,
                     child: Center(
                       child: Text("No image selected"),
@@ -135,25 +139,25 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       if (confidence >= 75) {
                         return Card(
                           elevation: 0,
-                          color: Color.fromARGB(255, 238, 250, 255),
+                          color: const Color.fromARGB(255, 238, 250, 255),
                           child: Container(
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "Scientific Name: ${result['label']}",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     fontSize: 20,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                     height: 10), // Add a 10-pixel space line
                                 Text(
                                   "Probability: ${confidence.toStringAsFixed(0)}%",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     fontSize: 20,
                                   ),
                                 ),
@@ -164,16 +168,16 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       } else {
                         return Card(
                           elevation: 0,
-                          color: Color.fromARGB(255, 238, 250, 255),
+                          color: const Color.fromARGB(255, 238, 250, 255),
                           child: Container(
-                            margin: EdgeInsets.all(20),
-                            child: Column(
+                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "This image cannot be identified within the constraints of our dataset.",
                                   style: TextStyle(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    color: Color.fromARGB(255, 0, 0, 0),
                                     fontSize: 20,
                                   ),
                                 ),
@@ -186,12 +190,12 @@ class _RecognitionPageState extends State<RecognitionPage> {
                   : [],
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -199,9 +203,9 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       onPressed: pickImage,
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 13, 71, 161),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        backgroundColor: const Color.fromARGB(255, 13, 71, 161),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -219,9 +223,9 @@ class _RecognitionPageState extends State<RecognitionPage> {
                       onPressed: _handleOpenCamera,
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 13, 71, 161),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        backgroundColor: const Color.fromARGB(255, 13, 71, 161),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -244,12 +248,12 @@ class _RecognitionPageState extends State<RecognitionPage> {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.black,
         ),
         child: BottomNavigationBar(
           selectedItemColor: const Color.fromARGB(255, 2, 2, 2),
-          unselectedItemColor: const Color.fromARGB(255, 124, 123, 123),
+          unselectedItemColor: const Color.fromARGB(255, 46, 46, 46),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -276,8 +280,8 @@ class _RecognitionPageState extends State<RecognitionPage> {
   }
 
   Future pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? pickedFile = await _picker.pickImage(
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
     File image = File(pickedFile!.path);
