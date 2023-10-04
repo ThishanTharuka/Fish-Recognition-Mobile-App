@@ -132,33 +132,56 @@ class _RecognitionPageState extends State<RecognitionPage> {
                   ? _results.map((result) {
                       double confidence =
                           result['confidence'] * 100; // Convert to percentage
-                      return Card(
-                        elevation: 0,
-                        color: Color.fromARGB(255, 238, 250, 255),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Scientific Name: ${result['label']}",
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 20,
+                      if (confidence >= 75) {
+                        return Card(
+                          elevation: 0,
+                          color: Color.fromARGB(255, 238, 250, 255),
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Scientific Name: ${result['label']}",
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10), // Add a 10-pixel space line
-                              Text(
-                                "Probability: ${confidence.toStringAsFixed(0)}%",
-                                style: TextStyle(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 20,
+                                SizedBox(
+                                    height: 10), // Add a 10-pixel space line
+                                Text(
+                                  "Probability: ${confidence.toStringAsFixed(0)}%",
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        return Card(
+                          elevation: 0,
+                          color: Color.fromARGB(255, 238, 250, 255),
+                          child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "This image cannot be identified within the constraints of our dataset.",
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
                     }).toList()
                   : [],
             ),
