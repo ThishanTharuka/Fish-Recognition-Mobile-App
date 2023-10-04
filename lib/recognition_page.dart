@@ -36,17 +36,18 @@ class RecognitionPage extends StatefulWidget {
 }
 
 class _RecognitionPageState extends State<RecognitionPage> {
-  int _selectedIndex = 0;
-  late File _image;
-  late List _results;
-  bool imageSelect = false;
+  int _selectedIndex = 0; // Index of the selected bottom navigation bar item
+  late File _image; // The selected image file
+  late List _results; // List of classification results
+  bool imageSelect = false; // Flag to check if an image is selected
 
   @override
   void initState() {
     super.initState();
-    loadModel();
+    loadModel(); // Load the machine learning model when the app starts
   }
 
+  // Function to load the machine learning model
   Future loadModel() async {
     Tflite.close();
     String res;
@@ -57,6 +58,7 @@ class _RecognitionPageState extends State<RecognitionPage> {
     print("Models loading status: $res");
   }
 
+  // Function to perform image classification
   Future imageClassification(File image) async {
     final List? recognitions = await Tflite.runModelOnImage(
       path: image.path,
@@ -72,23 +74,35 @@ class _RecognitionPageState extends State<RecognitionPage> {
     });
   }
 
+  // Function to handle bottom navigation bar item selection
   void _onNavItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-
     // Perform actions based on the selected navigation item
     if (_selectedIndex == 0) {
       // Handle Home action (navigate to the recognition page)
     } else if (_selectedIndex == 1) {
-      Navigator.pushNamed(context, '/settings');
+      Navigator.pushNamed(
+          context, '/settings'); // Navigate to the Settings page
     } else if (_selectedIndex == 2) {
-      Navigator.pushNamed(context, '/about');
+      Navigator.pushNamed(context, '/about'); // Navigate to the About page
     } else if (_selectedIndex == 3) {
       exit(0); // Close the app
     }
   }
 
+  // Function to pick an image from the gallery
+  Future pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    File image = File(pickedFile!.path);
+    imageClassification(image);
+  }
+
+  // Function to open the camera and capture an image
   Future<void> _handleOpenCamera() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
@@ -277,14 +291,5 @@ class _RecognitionPageState extends State<RecognitionPage> {
         ),
       ),
     );
-  }
-
-  Future pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
-    File image = File(pickedFile!.path);
-    imageClassification(image);
   }
 }
