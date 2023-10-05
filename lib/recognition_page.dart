@@ -44,7 +44,6 @@ class _RecognitionPageState extends State<RecognitionPage> {
   bool imageSelect = false; // Flag to check if an image is selected
   bool isFish = false; // Indicates whether the image is a fish or not
 
-
   @override
   void initState() {
     super.initState();
@@ -176,55 +175,78 @@ class _RecognitionPageState extends State<RecognitionPage> {
             child: Column(
               children: (imageSelect)
                   ? isFish
-                  ? _results1.map((result) {
-                double confidence =
-                    result['confidence'] * 100; // Convert to percentage
-                return Card(
-                  elevation: 0,
-                  color: const Color.fromARGB(255, 238, 250, 255),
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Scientific Name: ${result['label']}",
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 20,
+                      ? _results1.map((result) {
+                          double confidence = result['confidence'] *
+                              100; // Convert to percentage
+                          if (confidence >= 90) {
+                            return Card(
+                              elevation: 0,
+                              color: const Color.fromARGB(255, 238, 250, 255),
+                              child: Container(
+                                margin: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Scientific Name: ${result['label']}",
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                        height:
+                                            10), // Add a 10-pixel space line
+                                    Text(
+                                      "Probability: ${confidence.toStringAsFixed(0)}%",
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Card(
+                              elevation: 0,
+                              color: const Color.fromARGB(255, 238, 250, 255),
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                child: const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "This image cannot be identified within the constraints of our dataset.",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0),
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        }).toList()
+                      : [
+                          // Display "This is not identifiable" when isFish is false
+                          Card(
+                            elevation: 0,
+                            color: const Color.fromARGB(255, 238, 250, 255),
+                            child: Container(
+                              margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: const Text(
+                                "This is not identifiable as a Fish image.",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                            height: 10), // Add a 10-pixel space line
-                        Text(
-                          "Probability: ${confidence.toStringAsFixed(0)}%",
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList()
-                  : [
-                // Display "This is not identifiable" when isFish is false
-                Card(
-                  elevation: 0,
-                  color: const Color.fromARGB(255, 238, 250, 255),
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: const Text(
-                      "This is not identifiable",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ]
+                        ]
                   : [],
             ),
           ),
