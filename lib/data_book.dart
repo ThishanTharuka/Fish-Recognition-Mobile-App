@@ -9,12 +9,12 @@ class DataBookPage extends StatelessWidget {
   final List<FishSpecies> fishSpeciesList = [
     FishSpecies(
       scientificName: "Anthias anthias",
-      commonName: "Anthias",
+      commonName: "Swallowtail seaperch",
       imagePath: "assets/anthias_anthias.jpg",
     ),
     FishSpecies(
       scientificName: "Atherinomorus lacunosus",
-      commonName: "Atherinomorus",
+      commonName: "Wide-banded hardyhead silverside",
       imagePath: "assets/atherinomorus_lacunosus.jpg",
     ),
     FishSpecies(
@@ -29,7 +29,7 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Chlorophthalmus agassizi",
-      commonName: "Agassiz's Greeneye",
+      commonName: "Shortnose greeneye",
       imagePath: "assets/chlorophthalmus_agassizi.jpg",
     ),
     FishSpecies(
@@ -44,7 +44,7 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Epinephelus caninus",
-      commonName: "Blacktip Grouper",
+      commonName: "Dogtooth grouperr",
       imagePath: "assets/epinephelus_caninus.jpg",
     ),
     FishSpecies(
@@ -59,7 +59,7 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Phycis phycis",
-      commonName: "Blackbelly Rosefish",
+      commonName: "Forkbeard",
       imagePath: "assets/phycis_phycis.jpg",
     ),
     FishSpecies(
@@ -74,7 +74,7 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Rhinobatos cemiculus",
-      commonName: "Small-eyed Ray",
+      commonName: "Blackchin guitarfish",
       imagePath: "assets/rhinobatos_cemiculus.jpg",
     ),
     FishSpecies(
@@ -89,12 +89,12 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Squalus acanthias",
-      commonName: "Spiny Dogfish",
+      commonName: "Picked dogfish",
       imagePath: "assets/squalus_acanthias.jpg",
     ),
     FishSpecies(
       scientificName: "Tetrapturus belone",
-      commonName: "Longbill Spearfish",
+      commonName: "Mediterranean spearfish",
       imagePath: "assets/tetrapturus_belone.jpg",
     ),
     FishSpecies(
@@ -104,7 +104,7 @@ class DataBookPage extends StatelessWidget {
     ),
     FishSpecies(
       scientificName: "Trigloporus lastoviza",
-      commonName: "Red Gurnard",
+      commonName: "African Gurnard",
       imagePath: "assets/trigloporus_lastoviza.jpg",
     ),
   ];
