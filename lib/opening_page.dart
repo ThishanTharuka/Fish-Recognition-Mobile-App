@@ -16,7 +16,7 @@ class _OpeningPageState extends State<OpeningPage> {
   }
 
   void _delayedShowIcon() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(microseconds: 0), () {
       if (mounted) {
         setState(() {
           _showIcon = true;

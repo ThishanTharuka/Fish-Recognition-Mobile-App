@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
@@ -39,39 +40,67 @@ class _RecognitionPageState extends State<RecognitionPage> {
   int _selectedIndex = 0; // Index of the selected bottom navigation bar item
   late File _image; // The selected image file
   late List _results; // List of classification results
+  late List _results1 = [];
   bool imageSelect = false; // Flag to check if an image is selected
+  bool isFish = false; // Indicates whether the image is a fish or not
+
 
   @override
   void initState() {
     super.initState();
-    loadModel(); // Load the machine learning model when the app starts
-  }
-
-  // Function to load the machine learning model
-  Future loadModel() async {
-    Tflite.close();
-    String res;
-    res = (await Tflite.loadModel(
-      model: "assets/model.tflite",
-      labels: "assets/labels.txt",
-    ))!;
-    print("Models loading status: $res");
   }
 
   // Function to perform image classification
   Future imageClassification(File image) async {
+    await Tflite.loadModel(
+      model: "assets/model.tflite",
+      labels: "assets/labels.txt",
+    );
     final List? recognitions = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 1,
+      threshold: 0,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+    Tflite.close();
+    setState(() {
+      _results = recognitions!;
+      _image = image;
+      imageSelect = true;
+      // Assuming the first model outputs probability for "not a fish"
+      double notFishProbability = _results[0]['confidence'];
+      // Set a threshold value (e.g., 0.5) below which you consider it as a fish
+      double threshold = 0.5;
+      isFish = notFishProbability < threshold;
+      if (isFish) {
+        // If it's a fish, run fish classification model
+        classifyFish(image);
+      }
+    });
+  }
+
+  Future classifyFish(File image) async {
+    await Tflite.loadModel(
+      model: "assets/fish_model.tflite",
+      labels: "assets/fish_labels.txt",
+    );
+    final List? fishRecognitions = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 20,
       threshold: 0.5,
       imageMean: 127.5,
       imageStd: 127.5,
     );
+    Tflite.close();
     setState(() {
-      _results = recognitions!;
+      _results1 = fishRecognitions!;
       _image = image;
       imageSelect = true;
     });
+    // Handle the fish classification results as needed
+    // fishRecognitions will contain the results of the fish classification model
+    print("Fish Classification Results: $fishRecognitions");
   }
 
   // Function to handle bottom navigation bar item selection
@@ -132,13 +161,12 @@ class _RecognitionPageState extends State<RecognitionPage> {
           Container(
             margin: const EdgeInsets.all(20),
             height: 300, // Set a fixed height as per your requirement
-            child: imageSelect
+            child: (imageSelect)
                 ? Image.file(
                     _image,
                     fit: BoxFit.cover, // You can use different BoxFit options
                   )
-                : const Opacity(
-                    opacity: 1,
+                : const Visibility(
                     child: Center(
                       child: Text("No image selected"),
                     ),
@@ -146,61 +174,57 @@ class _RecognitionPageState extends State<RecognitionPage> {
           ),
           SingleChildScrollView(
             child: Column(
-              children: imageSelect
-                  ? _results.map((result) {
-                      double confidence =
-                          result['confidence'] * 100; // Convert to percentage
-                      if (confidence >= 75) {
-                        return Card(
-                          elevation: 0,
-                          color: const Color.fromARGB(255, 238, 250, 255),
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Scientific Name: ${result['label']}",
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                const SizedBox(
-                                    height: 10), // Add a 10-pixel space line
-                                Text(
-                                  "Probability: ${confidence.toStringAsFixed(0)}%",
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
+              children: (imageSelect)
+                  ? isFish
+                  ? _results1.map((result) {
+                double confidence =
+                    result['confidence'] * 100; // Convert to percentage
+                return Card(
+                  elevation: 0,
+                  color: const Color.fromARGB(255, 238, 250, 255),
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Scientific Name: ${result['label']}",
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 20,
                           ),
-                        );
-                      } else {
-                        return Card(
-                          elevation: 0,
-                          color: const Color.fromARGB(255, 238, 250, 255),
-                          child: Container(
-                            margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "This image cannot be identified within the constraints of our dataset.",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                        const SizedBox(
+                            height: 10), // Add a 10-pixel space line
+                        Text(
+                          "Probability: ${confidence.toStringAsFixed(0)}%",
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 20,
                           ),
-                        );
-                      }
-                    }).toList()
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList()
+                  : [
+                // Display "This is not identifiable" when isFish is false
+                Card(
+                  elevation: 0,
+                  color: const Color.fromARGB(255, 238, 250, 255),
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    child: const Text(
+                      "This is not identifiable",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ]
                   : [],
             ),
           ),
