@@ -167,7 +167,14 @@ class _RecognitionPageState extends State<RecognitionPage> {
                   )
                 : const Visibility(
                     child: Center(
-                      child: Text("No image selected"),
+                      child: Text(
+                        "No image selected.\n"
+                        "Select an Image",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
                     ),
                   ),
           ),
@@ -316,19 +323,19 @@ class _RecognitionPageState extends State<RecognitionPage> {
           unselectedItemColor: const Color.fromARGB(255, 46, 46, 46),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.home_outlined),
                 label: 'Home',
                 backgroundColor: Color.fromARGB(255, 128, 216, 255)),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              icon: Icon(Icons.auto_stories_outlined),
+              label: 'Data Book',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info),
+              icon: Icon(Icons.info_outline),
               label: 'About',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.exit_to_app),
+              icon: Icon(Icons.exit_to_app_outlined),
               label: 'Exit',
             ),
           ],

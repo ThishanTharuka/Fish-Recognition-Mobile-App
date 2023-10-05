@@ -3,15 +3,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 238, 250, 255),
       appBar: AppBar(
-        title: Text('About'),
-        backgroundColor: Color.fromARGB(255, 62, 95, 243),
+        title: const Text(
+          'About',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 128, 216, 255),
         automaticallyImplyLeading: false, // Remove the back button
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +67,7 @@ class AboutPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.black,
         ),
         child: BottomNavigationBar(
@@ -67,19 +75,19 @@ class AboutPage extends StatelessWidget {
           unselectedItemColor: const Color.fromARGB(255, 124, 123, 123),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              icon: Icon(Icons.auto_stories_outlined),
+              label: 'Data Book',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info),
-              label: 'About',
-            ),
+                icon: Icon(Icons.info_outline),
+                label: 'About',
+                backgroundColor: Color.fromARGB(255, 128, 216, 255)),
             BottomNavigationBarItem(
-              icon: Icon(Icons.exit_to_app),
+              icon: Icon(Icons.exit_to_app_outlined),
               label: 'Exit',
             ),
           ],
